@@ -15,10 +15,8 @@ static ssize_t dump_show(struct device *device,
 	char *tmp_buf;
 
 	tmp_buf = kzalloc(PAGE_SIZE, GFP_KERNEL);
-	if (!tmp_buf) {
-		dev_alert(device, "%s : Unable to get buf memory\n", __func__);
+	if (!tmp_buf)
 		return -ENOMEM;
-	}
 
 	len = tee_context_dump(tee, tmp_buf, PAGE_SIZE - 128);
 
@@ -157,7 +155,7 @@ void tee_init_sysfs(struct tee *tee)
 		return;
 
 	if (dev_get_drvdata(tee->miscdev.this_device) != tee) {
-		dev_err(_DEV(tee), "drvdata is not valid\n");
+		tee_err(tee, "drvdata is not valid\n");
 		return;
 	}
 

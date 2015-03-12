@@ -44,10 +44,8 @@ static struct tee_mutex_wait *tee_mutex_wait_get(struct device *dev,
 			goto out;
 
 	w = kmalloc(sizeof(struct tee_mutex_wait), GFP_KERNEL);
-	if (!w) {
-		dev_err(dev, "kmalloc <struct tee_mutex_wait> failed\n");
+	if (!w)
 		goto out;
-	}
 
 	init_completion(&w->comp);
 	mutex_init(&w->mu);

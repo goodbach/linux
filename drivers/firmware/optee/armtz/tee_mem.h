@@ -14,8 +14,8 @@
 
 struct shm_pool;
 
-struct shm_pool *tee_shm_pool_create(struct device *dev, size_t shm_size,
-				     void *shm_vaddr, unsigned long shm_paddr);
+struct shm_pool *tee_shm_pool_create(struct device *dev, size_t size,
+				     void *vaddr, unsigned long paddr);
 
 void tee_shm_pool_destroy(struct device *dev, struct shm_pool *pool);
 

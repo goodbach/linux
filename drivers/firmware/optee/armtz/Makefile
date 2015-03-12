@@ -1,23 +1,6 @@
-
-#########################################################################
-# Set Internal Variables                                                #
-# May be modified to match your setup                                   #
-#########################################################################
-CFG_TEE_DRV_DEBUGFS?=0
-CFG_TEE_CORE_LOG_LEVEL?=2
-CFG_TEE_TA_LOG_LEVEL?=2
-
 ccflags-y+=-Werror
-#ccflags-y+=-Idrivers/staging/optee/include/arm_common
-#ccflags-y+=-Idrivers/staging/optee/include/linux
-#ccflags-y+=-Idrivers/staging/optee/include
-#ccflags-y+=-Idrivers/staging/optee/core
 
-ccflags-y+=-DCFG_TEE_DRV_DEBUGFS=${CFG_TEE_DRV_DEBUGFS}
-ccflags-y+=-DCFG_TEE_CORE_LOG_LEVEL=${CFG_TEE_CORE_LOG_LEVEL}
-ccflags-y+=-DCFG_TEE_TA_LOG_LEVEL=${CFG_TEE_TA_LOG_LEVEL}
-
-obj-$(CONFIG_TEE_SUPPORT) += optee_armtz.o
+obj-$(CONFIG_OPTEE) += optee_armtz.o
 
 optee_armtz-objs:=   \
 		tee_tz_drv.o \
@@ -26,7 +9,7 @@ optee_armtz-objs:=   \
 
 
 ifeq ($(CONFIG_ARM),y)
-# "smc" assembly intruction requires dedicated "armv7 secure extension"
+# "smc" assembly instruction requires dedicated "ARMv7 secure extension"
 secext := $(call as-instr,.arch_extension sec,+sec)
 AFLAGS_tee_smc-arm.o := -Wa,-march=armv7-a$(secext)
 optee_armtz-objs += \

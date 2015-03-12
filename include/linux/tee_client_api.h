@@ -253,8 +253,7 @@ struct teec_uuid {
 };
 
 /**
- * Memory to transfer data between a client
- * application and trusted code.
+ * Memory to transfer data between a client application and trusted code.
  *
  * @param buffer      The memory buffer which is to be, or has been, shared
  *                    with the TEE.
@@ -281,9 +280,8 @@ struct teec_shm {
 };
 
 /**
- * Temporary memory to transfer data between
- * a client application and trusted code, only used for the duration of the
- * operation.
+ * Temporary memory to transfer data between a client application and trusted
+ * code, only used for the duration of the operation.
  *
  * @param buffer  The memory buffer which is to be, or has been shared with
  *                the TEE.
@@ -298,9 +296,8 @@ struct teec_tmp_memref {
 };
 
 /**
- * Use a pre-registered or
- * pre-allocated shared memory block of memory to transfer data between
- * a client application and trusted code.
+ * Use a pre-registered or pre-allocated shared memory block of memory to
+ * transfer data between a client application and trusted code.
  *
  * @param parent  Points to a shared memory structure. The memory reference
  *                may utilize the whole shared memory or only a part of it.
@@ -334,8 +331,8 @@ struct teec_val {
 };
 
 /**
- * Memory container to be used when passing data between
- *                        client application and trusted code.
+ * Memory container to be used when passing data between client application
+ * and trusted code.
  *
  * Either the client uses a shared memory reference, parts of it or a small raw
  * data container.
