@@ -144,10 +144,10 @@ struct tee_context *tee_context_create(struct tee *tee)
 }
 
 /**
- * _tee_context_do_release - Final function to release
+ * tee_context_do_release - Final function to release
  *                           and free a context.
  */
-static void _tee_context_do_release(struct kref *kref)
+static void tee_context_do_release(struct kref *kref)
 {
 	struct tee_context *ctx;
 	struct tee *tee;
@@ -212,7 +212,7 @@ void tee_context_put(struct tee_context *ctx)
 	if (!is_in_list(tee, &ctx->entry))
 		return;
 
-	kref_put(&ctx->refcount, _tee_context_do_release);
+	kref_put(&ctx->refcount, tee_context_do_release);
 
 	tee_dbg(tee, "%s: ctx=%p, kref=%d\n", __func__,
 		_ctx, (int)atomic_read(&ctx->refcount.refcount));
@@ -235,7 +235,7 @@ void tee_context_destroy(struct tee_context *ctx)
 	tee_context_put(ctx);
 }
 
-int tee_context_copy(bool dest, struct tee_context *ctx,
+int tee_context_copy(bool from_user, struct tee_context *ctx,
 			void *to, const void *from, size_t size)
 {
 	int ret = 0;
@@ -246,7 +246,7 @@ int tee_context_copy(bool dest, struct tee_context *ctx,
 	if (!ctx->usr_client) {
 		memcpy(to, from, size);
 		return 0;
-	} else if (dest)
+	} else if (from_user)
 		ret = copy_from_user(to, from, size);
 	else
 		ret = copy_to_user(to, from, size);

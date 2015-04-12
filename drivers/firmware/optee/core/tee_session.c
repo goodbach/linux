@@ -433,7 +433,7 @@ out:
 }
 
 
-static struct tee_shm *tee_session_shm_new(struct tee_context *ctx,
+static struct tee_shm *tee_session_shm_create(struct tee_context *ctx,
 				  struct tee      *tee,
 				  struct teec_shm *c_shm,
 				  uint32_t         buf_offset,
@@ -508,8 +508,11 @@ static int copy_op_params(struct tee_context *ctx, struct tee_cmd_io *cmd_io,
 	struct tee_data *param = &cmd->param;
 	struct tee *tee;
 
-	BUG_ON(!ctx);
-	BUG_ON(!ctx->tee);
+	if (!ctx || !ctx->tee) {
+		pr_err("TEE Session: NULL pointer error in %s\n", __func__);
+		return res;
+	}
+
 	tee = ctx->tee;
 
 	if (tee_context_copy(true, ctx, &op, cmd_io->op,
@@ -578,7 +581,7 @@ static int copy_op_params(struct tee_context *ctx, struct tee_cmd_io *cmd_io,
 			type = change_param_type(param->c_shm[idx].flags);
 
 			param->params[idx].shm =
-				tee_session_shm_new(ctx, tee,
+				tee_session_shm_create(ctx, tee,
 				       &param->c_shm[idx],
 				       0, param->c_shm[idx].size, type);
 
@@ -610,7 +613,7 @@ static int copy_op_params(struct tee_context *ctx, struct tee_cmd_io *cmd_io,
 			type = change_param_type(type);
 
 			param->params[idx].shm =
-				tee_session_shm_new(ctx, tee,
+				tee_session_shm_create(ctx, tee,
 				       &param->c_shm[idx],
 				       offset, param->c_shm[idx].size, type);
 

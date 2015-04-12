@@ -21,9 +21,6 @@
 #define TEE_RPC_STATE_IDLE    0x00
 #define TEE_RPC_STATE_ACTIVE  0x01
 
-#define TEE_RPC_BUFFER	0x00000001
-#define TEE_RPC_VALUE	0x00000002
-
 /* Keep aligned with optee_client (user space) */
 #define TEE_RPC_BUFFER		0x00000001
 #define TEE_RPC_VALUE		0x00000002
